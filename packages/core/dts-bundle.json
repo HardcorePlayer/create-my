@@ -1,7 +1,0 @@
-{
-    "name": "create-my-core",
-    "main": "./dist/types/src/index.d.ts",
-    "baseDir": "./dist",
-    "out": "index.d.ts",
-    "outputAsModuleFolder": true
-}
