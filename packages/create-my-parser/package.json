@@ -1,17 +1,18 @@
 {
-  "name": "create-my-core",
-  "version": "0.0.2",
-  "description": "create-my core library",
-  "scripts": {
-    "build": "cross-env NODE_ENV=production npx webpack -p"
-  },
-  "author": "Rabbit <yfhj1990@hotmail.com>",
-  "license": "MIT",
+  "name": "create-my-parser",
+  "version": "0.0.1",
+  "description": "create-my config file parser",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "cross-env NODE_ENV=production npx webpack -p",
+    "test": "npx jest"
+  },
   "files": [
     "dist"
   ],
+  "license": "MIT",
+  "author": "Rabbit <yfhj1990@hotmail.com>",
   "homepage": "https://github.com/HardcorePlayer/create-my#readme",
   "repository": {
     "type": "git",
@@ -20,24 +21,32 @@
   "bugs": {
     "url": "https://github.com/HardcorePlayer/create-my/issues"
   },
+  "dependencies": {
+    "create-my-core": "file:../create-my-core",
+    "find-cache-dir": "^2.0.0",
+    "js-yaml": "^3.12.1",
+    "lodash": "^4.17.11",
+    "npm": "^6.7.0"
+  },
   "devDependencies": {
-    "@babel/core": "^7.2.2",
     "@babel/plugin-proposal-class-properties": "^7.3.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.3.1",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/plugin-transform-runtime": "^7.2.0",
     "@babel/preset-env": "^7.3.1",
     "@rabbitcc/webpack-builder": "0.0.12",
-    "@types/lodash": "^4.14.120",
-    "@types/node": "^10.12.18",
-    "@types/yargs-parser": "^11.0.2",
+    "@types/find-cache-dir": "^2.0.0",
+    "@types/jest": "^23.3.13",
+    "@types/js-yaml": "^3.12.0",
+    "@types/npm": "^2.0.29",
+    "@types/webpack-env": "^1.13.6",
     "babel-loader": "^8.0.5",
     "cache-loader": "^2.0.1",
     "clean-webpack-plugin": "github:HairyRabbit/clean-webpack-plugin",
-    "dts-bundle": "^0.7.3",
-    "fork-ts-checker-webpack-plugin": "^0.5.2",
+    "jest": "^24.0.0",
+    "ts-jest": "^23.10.5",
     "ts-loader": "^5.3.3",
-    "typescript": "^3.2.4",
+    "typescript": "^3.3.1",
     "webpack": "^4.29.0",
     "webpack-cli": "^3.2.1",
     "webpack-node-externals": "^1.7.2"

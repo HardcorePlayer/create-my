@@ -10,7 +10,7 @@ export interface TaskInterface<O> extends TaskAction {
    * task id
    */
   id: string
-  title: string  
+  title: string
   /**
    * task options
    */
@@ -32,20 +32,20 @@ export interface TaskConstructor<O extends TaskOptions<any>> {
   new(context: TaskContext, options: O): Task<O>
 }
 
-type TaskActionReturnType = void | TaskResult | string | [TaskResult, string]
+export type TaskActionReturnType = void | TaskResult | string | [TaskResult, string]
 
-interface TaskAction {
+export interface TaskAction {
   validate(): void | string | Promise<void | string>
   run(): TaskActionReturnType | Promise<TaskActionReturnType>
   rollback(): TaskActionReturnType | Promise<TaskActionReturnType>
 }
 
-interface TaskContext {
+export interface TaskContext {
   root: string,
   cmdroot: string
 }
 
-interface TaskOptions<T> {
+export interface TaskOptions<T> {
   readonly _?: { [K in keyof T]: T[K] }
 }
 
@@ -93,8 +93,3 @@ export class Group extends Task<GroupOptions> {
 
   run() { return TaskResult.Skip }
 }
-
-export { TaskOptions, 
-         TaskContext, 
-         TaskActionReturnType,
-         TaskAction }

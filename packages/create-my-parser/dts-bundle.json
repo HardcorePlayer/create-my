@@ -1,0 +1,6 @@
+{
+    "name": "create-my-parser",
+    "main": "./dist/types/src/index.d.ts",
+    "baseDir": "./dist",
+    "out": "index.d.ts"
+}

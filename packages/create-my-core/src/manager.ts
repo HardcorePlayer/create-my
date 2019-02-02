@@ -10,7 +10,7 @@ import { isString, isArray, isEmpty } from 'lodash'
 
 export type TaskStack = Set<TaskBox>
 
-interface TaskEntry {
+export interface TaskEntry {
   task: Task<any>,
   deps?: Array<string>
   alias?: string
@@ -54,7 +54,7 @@ interface TaskManagerAction {
   run(): Promise<void>
 }
 
-interface TaskManagerRendered {
+export interface TaskManagerRendered {
   readonly id: string
   readonly name: string
   readonly state: TaskState
@@ -83,9 +83,9 @@ function setTaskCounter(tasks: TaskMap, task: TaskInterface<any>): void {
 
 export type TaskError = { task: TaskInterface<any>, error: Error }
 
-const enum TaskManagerMessageType { Info, Warning, Error }
+export const enum TaskManagerMessageType { Info, Warning, Error }
 
-interface TaskManagerMessageRendered {
+export interface TaskManagerMessageRendered {
   id: string,
   name: string,
   type: TaskManagerMessageType,
@@ -100,10 +100,10 @@ export class TaskManager implements TaskManagerInterface {
   public exit!: (code?: number | undefined) => void
   public errors: Set<{ box: TaskBox, error: Error}> = new Set()
   public messages: Set<{ box: TaskBox, msg: string, type: TaskManagerMessageType }> = new Set()
-  
+
   constructor(tasklist: Array<TaskEntry>) {
     /**
-     * if context dir was not exists, add `mkdir(this.context)` 
+     * if context dir was not exists, add `mkdir(this.context)`
      * before all the tasks.
      */
     const depTaskMap: Map<string, Set<TaskBox>> = new Map()
@@ -127,7 +127,7 @@ export class TaskManager implements TaskManagerInterface {
           }
         })
       }
-      
+
       /**
        * if task as same id, replace old box with new box and reuse box id
        * @todo old box deps
@@ -164,7 +164,7 @@ export class TaskManager implements TaskManagerInterface {
       const box = item[1]
       if(box.validated) continue
       if(failed) break
-      
+
       const task = box.task
 
       /**
@@ -178,7 +178,7 @@ export class TaskManager implements TaskManagerInterface {
         const description = await task.validate()
         task.result = TaskResult.Done
         task.description = description || undefined
-        
+
         task.dependencies.forEach(deptask => {
           /**
            * find deptask from `this.tasks` by `deptask.id`,
@@ -186,23 +186,23 @@ export class TaskManager implements TaskManagerInterface {
            * if exists, check the validated, `false` means the box
            * should validate at next loop.
            */
-          const depbox: undefined | TaskBox = this.tasks.get(deptask.id)          
-          
+          const depbox: undefined | TaskBox = this.tasks.get(deptask.id)
+
           if(!depbox) {
             const newbox = makeTaskBox(this.tasks.size + 1, deptask, { dynamic: true })
             newbox.issues.add(box)
             this.tasks.set(deptask.id, newbox)
             box.counter += 1
             next = true
-          } else {          
+          } else {
             /**
              * link `depbox.issues` with `box`
-             */            
+             */
             if(!depbox.issues.has(box)) {
               depbox.issues.add(box)
               box.counter += 1
-            }            
-  
+            }
+
             /**
              * replace refs when got same id
              */
@@ -214,9 +214,9 @@ export class TaskManager implements TaskManagerInterface {
         })
         box.validated = true
       } catch(e) {
-        this.messages.add({ 
-          type: TaskManagerMessageType.Error, 
-          box, 
+        this.messages.add({
+          type: TaskManagerMessageType.Error,
+          box,
           msg: String(e)
         })
         task.result = TaskResult.Fail
@@ -245,38 +245,38 @@ export class TaskManager implements TaskManagerInterface {
       const { task } = box
 
       task.state = TaskState.Run
-      
+
       try {
         const beg: number = Date.now()
 
         const [ result, description ] = await runTaskAction(task.run.bind(task))
         task.result = result
         task.description = description
-        
+
         box.during = Date.now() - beg
 
         /**
-         * `task.run()` complated 
+         * `task.run()` complated
          */
         box.counter = -1
         this.stack.add(box)
         setTaskCounter(this.tasks, task)
       } catch(e) {
         /**
-         * task failed, collect errors, set flag, and ready 
+         * task failed, collect errors, set flag, and ready
          * do rollback action
          */
         task.result = TaskResult.Fail
         task.description = String(e)
-        this.messages.add({ 
-          type: TaskManagerMessageType.Error, 
-          box, 
+        this.messages.add({
+          type: TaskManagerMessageType.Error,
+          box,
           msg: String(e)
         })
         failed = true
       }
     }))
-    
+
     /**
      * if any errors happend, stop run next loop, otherwise
      * stil call `run()` until no tasks found
@@ -297,9 +297,9 @@ export class TaskManager implements TaskManagerInterface {
       } catch(e) {
         failed = true
         box.task.result = TaskResult.Fail
-        this.messages.add({ 
-          type: TaskManagerMessageType.Error, 
-          box: box, 
+        this.messages.add({
+          type: TaskManagerMessageType.Error,
+          box: box,
           msg: String(e)
         })
       }
@@ -324,7 +324,7 @@ export class TaskManager implements TaskManagerInterface {
   render(): Array<TaskManagerRendered> {
     const acc: Array<TaskManagerRendered> = []
     const tasks = this.tasks
-    
+
     tasks.forEach(box => {
       acc.push({
         id: box.id.toString(),
@@ -344,7 +344,7 @@ export class TaskManager implements TaskManagerInterface {
       if(undefined === box) return depth
       if(0 === box.task.dependencies.size) return depth
       return Math.max.apply(
-        null, 
+        null,
         Array.from(box.task.dependencies).map(task => {
           const depbox = tasks.get(task.id)
           if(!depbox) throw new Error(`box not found`)
@@ -416,7 +416,7 @@ export class TaskManager implements TaskManagerInterface {
 
 /**
  * exit app
- * 
+ *
  * @param f call function before `process.exit`
  */
 function exit(f: () => void) {
@@ -430,7 +430,7 @@ function exit(f: () => void) {
 
 async function runTaskAction(action: { [K in keyof TaskAction]: TaskAction[K] }[keyof TaskAction]): Promise<[TaskResult, string | undefined]> {
   const result: TaskActionReturnType | void = await action()
-  return !result 
+  return !result
     ? [ TaskResult.Done, undefined ]
     : isArray(result)
     ? result
@@ -500,14 +500,12 @@ export function mapToTaskStateProps(state: TaskState, result?: TaskResult): { ic
   }
 }
 
-function createTaskManager(tasklist: Array<TaskEntry>): TaskManager {
+export type TaskList = Array<{
+  task: Task<any>,
+  deps: Array<string>,
+  alias: string
+}>
+
+export function createTaskManager(tasklist: Array<TaskEntry>): TaskManager {
   return new TaskManager(tasklist)
 }
-
-export {
-  TaskEntry,
-  TaskManagerRendered,
-  TaskManagerMessageRendered
-}
-
-export default createTaskManager

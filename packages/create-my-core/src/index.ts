@@ -2,9 +2,14 @@
  * re-export task and manager
  */
 
-export { default as Task,
+export { Task,
+         Task as default,
+         Group,
+         TaskOptions,
+         TaskConstructor,
          TaskResult,
          TaskState,
          TaskContext } from './tasker'
 
-export { default as createTaskManager } from './manager'
+export { createTaskManager,
+         TaskEntry } from './manager'

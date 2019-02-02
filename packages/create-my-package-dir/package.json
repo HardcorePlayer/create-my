@@ -1,0 +1,25 @@
+{
+  "name": "create-my-package-dir",
+  "version": "0.0.3",
+  "description": "> TODO: description",
+  "author": "Rabbit <yfhj1990@hotmail.com>",
+  "homepage": "https://github.com/HardcorePlayer/create-my#readme",
+  "license": "MIT",
+  "main": "mkdir.js",
+  "files": [
+    "tasks.yaml"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HardcorePlayer/create-my.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/HardcorePlayer/create-my/issues"
+  },
+  "dependencies": {
+    "create-my-core": "0.0.2"
+  }
+}
