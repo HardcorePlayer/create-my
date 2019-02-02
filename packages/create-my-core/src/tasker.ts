@@ -2,32 +2,6 @@
  * task
  */
 
-/**
- * Task interface, `O` was task options
- */
-export interface TaskInterface<O> extends TaskAction {
-  /**
-   * task id
-   */
-  id: string
-  title: string
-  /**
-   * task options
-   */
-  readonly options: O
-  /**
-   * task dependencies, can set dynamic dependencies at validate hooks
-   */
-  dependencies: Set<TaskInterface<any>>
-  /**
-   * means this task as dependency for other task, and set by configure
-   * step
-   */
-  state: TaskState
-  result?: TaskResult
-  description?: string
-}
-
 export interface TaskConstructor<O extends TaskOptions<any>> {
   new(context: TaskContext, options: O): Task<O>
 }
@@ -52,14 +26,14 @@ export interface TaskOptions<T> {
 export const enum TaskState { Init, Validate, Run, Rollback }
 export const enum TaskResult { Fail, Done, Skip, Force }
 
-export abstract class Task<O> implements TaskInterface<O> {
-  id!: string
-  title!: string
-  description!: string
-  abstract readonly options: O
-  dependencies: Set<TaskInterface<any>> = new Set()
-  state: TaskState = TaskState.Init
-  result?: TaskResult
+export abstract class Task<O> implements TaskAction {
+  protected id!: string
+  protected title!: string
+  public description!: string
+  protected abstract readonly options: O
+  public dependencies: Set<Task<any>> = new Set()
+  public state: TaskState = TaskState.Init
+  public result?: TaskResult
   constructor(public readonly context: TaskContext) {}
   validate() {}
   run() {}
