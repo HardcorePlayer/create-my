@@ -11,7 +11,7 @@ export default async function main(args: string[]): Promise<void> {
   const name = positional.shift()
 
   if(!name) {
-    console.log('\n  ❤ any task ?')
+    console.log('❤')
     process.exit(0)
     return
   }

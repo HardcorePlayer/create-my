@@ -1,18 +1,21 @@
 {
   "name": "create-my",
-  "version": "0.0.0",
+  "version": "0.0.7",
   "description": "create-my cli",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "create-my": "bin/create-my"
+    "create": "bin/cli.js"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "start": "tsc -w",
+    "build": "tsc",
+    "test": "jest"
   },
   "files": [
-    "lib"
+    "bin",
+    "dist"
   ],
   "author": "Rabbit <yfhj1990@hotmail.com>",
   "homepage": "https://github.com/HardcorePlayer/create-my#readme",
@@ -24,16 +27,12 @@
     "url": "https://github.com/HardcorePlayer/create-my/issues"
   },
   "dependencies": {
-    "create-my-core": "0.0.2",
-    "create-my-parser": "0.0.1",
+    "create-my-core": "file:../create-my-core",
+    "create-my-parser": "file:../create-my-parser",
+    "tslib": "^2.0.1",
     "yargs-parser": "^11.1.1"
   },
   "devDependencies": {
-    "@types/jest": "^23.3.13",
-    "@types/node": "^10.12.21",
-    "@types/yargs-parser": "^11.0.2",
-    "jest": "^24.0.0",
-    "ts-jest": "^23.10.5",
-    "typescript": "^3.3.1"
+    "typescript": "^4.0.0-beta"
   }
 }
