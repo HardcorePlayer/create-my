@@ -1,0 +1,37 @@
+{
+  "name": "create-my-common",
+  "version": "0.0.0",
+  "description": "create-my common utils",
+  "license": "GPL-3.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "start": "tsc -w",
+    "build": "tsc",
+    "test": "jest"
+  },
+  "files": [
+    "dist"
+  ],
+  "author": "Rabbit <yfhj1990@hotmail.com>",
+  "homepage": "https://github.com/HardcorePlayer/create-my#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HardcorePlayer/create-my.git"
+  },
+  "bugs": {
+    "url": "https://github.com/HardcorePlayer/create-my/issues"
+  },
+  "dependencies": {
+    "tslib": "^2.0.1"
+  },
+  "devDependencies": {
+    "jest": "^26.4.0",
+    "ts-jest": "^26.2.0",
+    "typescript": "^4.0.0-beta"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
+  }
+}
