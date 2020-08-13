@@ -1,0 +1,36 @@
+{
+  "name": "create-my-file",
+  "version": "0.0.2",
+  "description": "create my file",
+  "author": "Rabbit <yfhj1990@hotmail.com>",
+  "homepage": "https://github.com/HardcorePlayer/create-my#readme",
+  "license": "GPL-3.0",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HardcorePlayer/create-my.git"
+  },
+  "scripts": {
+    "start": "tsc -w",
+    "prebuild": "rm dist -rf",
+    "build": "tsc",
+    "test": "jest",
+    "preversion": "npm run build",
+    "prepublish": "npm version patch"
+  },
+  "bugs": {
+    "url": "https://github.com/HardcorePlayer/create-my/issues"
+  },
+  "devDependencies": {
+    "jest": "^26.4.0",
+    "ts-jest": "^26.2.0",
+    "typescript": "^3.9.7"
+  },
+  "dependencies": {
+    "create-my-common": "0.0.2",
+    "tslib": "^2.0.1"
+  }
+}
